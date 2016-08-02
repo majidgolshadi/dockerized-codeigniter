@@ -4,10 +4,57 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "425582499c09ce5b5eebb2abb6dc2111",
-    "content-hash": "163eb4764cfceda4201e2d993dd1e79d",
+    "hash": "718afa100f0345966c5314551aaacfdb",
+    "content-hash": "b40e0c549c16068fe341816a7e84e7ba",
     "packages": [],
     "packages-dev": [
+        {
+            "name": "kenjis/ci-phpunit-test",
+            "version": "v0.12.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kenjis/ci-phpunit-test.git",
+                "reference": "a7c1fff7b413a328aedd6a466e7b8412cbbc11fa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kenjis/ci-phpunit-test/zipball/a7c1fff7b413a328aedd6a466e7b8412cbbc11fa",
+                "reference": "a7c1fff7b413a328aedd6a466e7b8412cbbc11fa",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "replace": {
+                "nikic/php-parser": "2.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kenji Suzuki",
+                    "homepage": "https://github.com/kenjis"
+                }
+            ],
+            "description": "An easier way to use PHPUnit with CodeIgniter 3.0",
+            "homepage": "http://kenjis.github.io/ci-phpunit-test/",
+            "keywords": [
+                "codeigniter",
+                "monkey patch",
+                "phpunit",
+                "test",
+                "unit testing"
+            ],
+            "time": "2016-07-23 13:14:37"
+        },
         {
             "name": "mikey179/vfsStream",
             "version": "v1.1.0",

@@ -1,4 +1,5 @@
 data:
+    container_name: ci_data
     image: busybox
     volumes:
         - ../:/var/www/ci
@@ -8,6 +9,7 @@ data:
         - /tmpfs
 
 nginx:
+    container_name: ci_nginx
     image: nginx:1.7
     links:
         - php
@@ -17,12 +19,14 @@ nginx:
         - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
 
 mysql:
+    container_name: ci_mysql
     image: mysql:5.5
     environment:
         MYSQL_ROOT_PASSWORD: root
         MYSQL_DATABASE: appdevdb
 
 php:
+    container_name: ci_php
     build: php
     working_dir: /var/www/ci
     environment:
