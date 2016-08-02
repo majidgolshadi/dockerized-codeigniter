@@ -1,10 +1,10 @@
 <phpunit
-	bootstrap="./Bootstrap.php"
+	bootstrap="./application/tests/Bootstrap.php"
 	colors="true">
 	<testsuites>
 		<testsuite name="CodeIgniter Application Test Suite">
-			<directory suffix="Test.php">./</directory>
-			<exclude>./_ci_phpunit_test/</exclude>
+			<directory suffix="Test.php">./application/tests/</directory>
+			<exclude>./application/tests/_ci_phpunit_test/</exclude>
 		</testsuite>
 	</testsuites>
 	<filter>
