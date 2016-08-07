@@ -1,0 +1,25 @@
+<phpunit
+	bootstrap="application/tests/Bootstrap.php"
+	colors="true">
+	<testsuites>
+		<testsuite name="CodeIgniter Application Test Suite">
+			<directory suffix="Test.php">application/tests/</directory>
+			<exclude>application/tests/_ci_phpunit_test/</exclude>
+		</testsuite>
+	</testsuites>
+	<filter>
+		<whitelist>
+			<directory suffix=".php">application/tests/controllers</directory>
+			<directory suffix=".php">application/tests/models</directory>
+			<directory suffix=".php">application/tests/views</directory>
+			<directory suffix=".php">application/tests/libraries</directory>
+			<directory suffix=".php">application/tests/helpers</directory>
+			<directory suffix=".php">application/tests/hooks</directory>
+		</whitelist>
+	</filter>
+	<logging>
+		<log type="coverage-html" target="application/tests/build/coverage"/>
+		<log type="coverage-clover" target="application/tests/build/logs/clover.xml"/>
+		<log type="junit" target="application/tests/build/logs/junit.xml" logIncompleteSkipped="false"/>
+	</logging>
+</phpunit>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="CodeIgniter Application Test Suite" tests="5" assertions="5" failures="0" errors="0" time="0.003921">
+    <testsuite name="WelcomeApiTest" file="/var/www/ci/application/tests/controllers/WelcomeApiTest.php" tests="2" assertions="2" failures="0" errors="0" time="0.002371">
+      <testcase name="test_index" class="WelcomeApiTest" file="/var/www/ci/application/tests/controllers/WelcomeApiTest.php" line="5" assertions="1" time="0.001592"/>
+      <testcase name="test_method_404" class="WelcomeApiTest" file="/var/www/ci/application/tests/controllers/WelcomeApiTest.php" line="11" assertions="1" time="0.000779"/>
+    </testsuite>
+    <testsuite name="WelcomeTest" file="/var/www/ci/application/tests/controllers/WelcomeTest.php" tests="3" assertions="3" failures="0" errors="0" time="0.001550">
+      <testcase name="test_index" class="WelcomeTest" file="/var/www/ci/application/tests/controllers/WelcomeTest.php" line="13" assertions="1" time="0.000633"/>
+      <testcase name="test_method_404" class="WelcomeTest" file="/var/www/ci/application/tests/controllers/WelcomeTest.php" line="19" assertions="1" time="0.000644"/>
+      <testcase name="test_APPPATH" class="WelcomeTest" file="/var/www/ci/application/tests/controllers/WelcomeTest.php" line="25" assertions="1" time="0.000273"/>
+    </testsuite>
+  </testsuite>
+</testsuites>
