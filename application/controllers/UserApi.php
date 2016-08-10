@@ -2,18 +2,18 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 require_once APPPATH.'libraries/REST_Controller.php';
+require_once APPPATH.'entity/User.php';
+require_once APPPATH.'manager/UserManager.php';
 
 class UserApi extends REST_Controller {
 
-    /**
-     * [GET] /user/
-     *
-     * Get users list
-     */
-	public function index_get()
-	{
+    private $userManager;
 
-	}
+    public function __construct()
+    {
+        parent::__construct();
+        $this->userManager = new UserManager();
+    }
 
     /**
      * [POST] /user/
@@ -22,49 +22,45 @@ class UserApi extends REST_Controller {
      */
     public function index_post()
     {
+        $user = new User();
 
-    }
+        $user->setPhone($this->post('phoneNumber'));
+        $user->setUsername($this->post('deviceId'));
+        $user->setActive(false);
 
-    /**
-     * [POST] /user/{id}/activate
-     *
-     * Activate user
-     */
-    public function activate_user_post($id)
-    {
-        $this->response([
-            'method' => 'Activate',
-            'id' => $id,
+        $token = $this->userManager->register($user);
+
+        return $this->response([
+            $this->config->item('rest_status_field_name') => true,
+            'uri' => '/user/'.$user->getUsername().'/activate?token='.$token,
         ]);
     }
 
     /**
-     * [DELETE] /user/{id}/activate
+     * [GET] /user/{username}/activation?token={$token}
+     *
+     * Activate user
+     */
+    public function activate_user_get($username)
+    {
+        $this->userManager->activate($username, $this->get('token'));
+
+        return $this->response([
+            $this->config->item('rest_status_field_name') => true
+        ]);
+    }
+
+    /**
+     * [DELETE] /user/{username}/activation
      *
      * Deactivate user
      */
-    public function activate_user_delete($id)
+    public function activate_user_delete($username)
     {
+        $this->userManager->deactivate($username);
 
-    }
-
-    /**
-     * [POST] /user/{id}/profile
-     *
-     * Set user profile information
-     */
-    public function profile_post()
-    {
-
-    }
-
-    /**
-     * [GET] /user/{id}/profile
-     *
-     * Get user profile information
-     */
-    public function profile_get()
-    {
-
+        return $this->response([
+            $this->config->item('rest_status_field_name') => true
+        ]);
     }
 }
