@@ -54,5 +54,5 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['user'] = 'userApi/index';
-$route['user/(:any)/activation'] = 'userApi/activate_user/$1';
+$route['user/(:any)/activation'] = 'userApi/activation_user/$1';
 

@@ -1,7 +1,5 @@
 <?php
 
-require_once APPPATH.'/libraries/JsonConvertible.php';
-
 class User
 {
     /**

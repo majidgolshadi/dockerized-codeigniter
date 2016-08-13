@@ -63,7 +63,7 @@ class Migration_Install_users extends CI_Migration {
             ),
             'active' => array(
                 'type' => 'BOOLEAN',
-                'default' => false
+                'default' => 0
             )
         ));
         $this->dbforge->add_key('id', TRUE);

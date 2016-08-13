@@ -2,7 +2,7 @@
 
 require_once APPPATH.'entity/User.php';
 
-class User_model extends MY_Model
+class User_model extends MY_Model implements ModelInterface
 {
     private $table = 'users';
 

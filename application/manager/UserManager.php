@@ -4,27 +4,36 @@ require_once APPPATH.'entity/User.php';
 
 class UserManager
 {
+    /**
+     * @var ModelInterface
+     */
     protected $userModel;
 
-    public function __construct()
+    public function __construct(ModelInterface $userModel)
     {
-        $CI = &get_instance();
-
-        $CI->load->model('user_model');
-        $this->userModel = $CI->user_model;
+        $this->userModel = $userModel;
     }
 
     /**
      * @param User $user
      *
      * @return string
+     * @throws Exception
      */
     public function register(User $user)
     {
+        if (null === $user->getUsername()) {
+            throw new Exception('Username is not set');
+        }
+
+        if (null === $user->getPhone()) {
+            throw new Exception('Phone number is not set');
+        }
+
         /** @var User $regUser */
         $regUser = $this->userModel->findOneBy('phone', $user->getPhone());
 
-        if ($regUser->getToken() && $user->getUsername() == $regUser->getUsername()) {
+        if ($regUser->getToken() && $user->getUsername() === $regUser->getUsername()) {
             return $regUser->getToken();
         }
 
@@ -37,38 +46,58 @@ class UserManager
     }
 
     /**
-     * @param $username
-     * @param $token
+     * @param User $user
      *
      * @throws Exception
      */
-    public function activate($username, $token)
+    public function activate(User $user)
     {
-        /** @var User $user */
-        $user = $this->userModel->findOneBy('username', $username);
+        if (empty($user->getUsername())) {
+            throw new Exception('Username is not set');
+        }
 
-        if ($token != $user->getToken()) {
-            throw new Exception('Invalid activation token');
+        if (empty($user->getToken())) {
+            throw new Exception('Token is not set');
+        }
+
+        /** @var User $fetchUser */
+        $fetchUser = $this->userModel->findOneBy('username', $user->getUsername());
+
+        if (empty($fetchUser->getUsername())) {
+            throw new Exception(sprintf('Username %s does not exist', $user->getUsername()));
+        }
+
+        if ($fetchUser->getToken() != $user->getToken()) {
+            throw new Exception('Invalid token');
         }
 
         $user->setActive(true);
         $this->userModel->update($user);
     }
 
-    public function deactivate($username)
+    /**
+     * @param User $user
+     *
+     * @throws Exception
+     */
+    public function deactivate(User $user)
     {
         /** @var User $user */
-        $user = $this->userModel->findOneBy('username', $username);
+        $fetchUser = $this->userModel->findOneBy('username', $user->getUsername());
 
-        if (empty($user->getUsername())) {
-            throw new Exception('Invalid Username');
+        if (empty($fetchUser->getUsername())) {
+            throw new Exception('Invalid username');
+        }
+
+        if (!$fetchUser->isActive()) {
+            throw new Exception('User was not activated');
         }
 
         $user->setActive(false);
         $this->userModel->update($user);
     }
 
-    // TODO: It's not part of UserManager
+    // TODO: generateToken It's not part of UserManager
     function generateToken($length = 5) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);

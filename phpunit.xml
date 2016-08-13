@@ -13,6 +13,7 @@
 			<directory suffix=".php">application/tests/models</directory>
 			<directory suffix=".php">application/tests/views</directory>
 			<directory suffix=".php">application/tests/libraries</directory>
+			<directory suffix=".php">application/tests/manager</directory>
 			<directory suffix=".php">application/tests/helpers</directory>
 			<directory suffix=".php">application/tests/hooks</directory>
 		</whitelist>
