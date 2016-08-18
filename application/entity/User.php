@@ -3,7 +3,7 @@
 class User
 {
     /**
-     * @var int
+     * @var \MongoDB\BSON\ObjectID
      */
     protected $id;
 
@@ -48,7 +48,7 @@ class User
     protected $active;
 
     /**
-     * @return int
+     * @return \MongoDB\BSON\ObjectID
      */
     public function getId()
     {
@@ -56,7 +56,7 @@ class User
     }
 
     /**
-     * @param int $id
+     * @param \MongoDB\BSON\ObjectID $id
      */
     public function setId($id)
     {

@@ -45,6 +45,16 @@ RUN \
     echo 'xdebug.remote_host=192.168.1.166' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
     echo 'xdebug.remote_enable=1'           >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
+RUN \
+    apt-get install -y \
+            openssl libssl-dev \
+            libcurl4-openssl-dev \
+            pkg-config \
+            libsasl2-dev \
+            libpcre3-dev \
+    && pecl install mongodb \
+    && docker-php-ext-enable mongodb
+
 COPY php.ini        /usr/local/etc/php/conf.d/
 COPY default.conf    /usr/local/etc/php-fpm.d/www.conf
 

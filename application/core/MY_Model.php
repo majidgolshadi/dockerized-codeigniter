@@ -1,11 +1,35 @@
 <?php
 
+use MongoDB\Driver\Manager;
+
 class MY_Model extends CI_Model
 {
+    protected $manager;
+
+    protected $db;
+
     public function __construct()
     {
         parent::__construct();
-        $this->load->database();
+
+        $mongoCfg = $this->config->item('mongo');
+
+        if (isset($mongoCfg['database'])) {
+            $this->db = $mongoCfg['database'];
+        }
+
+        $this->manager = new Manager($this->getUri($mongoCfg));
+    }
+
+    private function getUri($mongoConfig)
+    {
+        $uri = 'mongodb://'.$mongoConfig['hostname'];
+
+        if (isset($mongoConfig['port'])) {
+            $uri = $uri.':'.$mongoConfig['port'];
+        }
+
+        return $uri;
     }
 
 //    protected function modelToEntityMapper($classType, $dataArray)

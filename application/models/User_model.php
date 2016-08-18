@@ -1,53 +1,71 @@
 <?php
 
+use \MongoDB\Collection;
+
 require_once APPPATH.'entity/User.php';
+require_once APPPATH.'models/ModelInterface.php';
 
 class User_model extends MY_Model implements ModelInterface
 {
-    private $table = 'users';
+    /**
+     * @var Collection
+     */
+    private $collection;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->collection = new Collection($this->manager, $this->db, 'users');
+    }
 
     public function insert(User $user)
     {
-        return $this->db->insert(
-            $this->table,
-            $this->NormalizedFieldName($user->toArray())
+        $this->collection->insertOne(
+            $this->NormalizedFieldName(
+                $user->toArray()
+            ),
+            []
         );
     }
 
     public function update(User $user)
     {
-        return $this->db->update(
-            $this->table,
-            $this->NormalizedFieldName($user->toArray())
+        $this->collection->replaceOne(
+            ['username' => $user->getUsername()],
+            $this->NormalizedFieldName(
+                $user->toArray()
+            )
         );
     }
 
     public function findOneBy($filed, $value)
     {
-        $user = $this->db
-                     ->from($this->table)
-                     ->where($filed, $value)
-                     ->get()->result_array();
+        $user = $this->collection->findOne(
+            [],
+            [$filed => $value]
+        );
 
         return $this->modelToEntityMapper(
-            array_shift($user)
+            $user
         );
     }
 
     // TODO: Define dataMapper method to map data from entity to model and vice versa
-    private function modelToEntityMapper($userDataArray)
+    private function modelToEntityMapper($mongoUserObject)
     {
         $user = new User();
 
-        $user->setId($userDataArray['id']);
-        $user->setFirstName($userDataArray['first_name']);
-        $user->setLastName($userDataArray['last_name']);
-        $user->setUsername($userDataArray['username']);
-        $user->setToken($userDataArray['token']);
-        $user->setPhone($userDataArray['phone']);
-        $user->setPhoto($userDataArray['photo']);
-        $user->setWhatsUp($userDataArray['whats_up']);
-        $user->setActive($userDataArray['active']);
+        if (isset($mongoUserObject)) {
+            $user->setId($mongoUserObject['_id']);
+            $user->setFirstName($mongoUserObject['first_name']);
+            $user->setLastName($mongoUserObject['last_name']);
+            $user->setUsername($mongoUserObject['username']);
+            $user->setToken($mongoUserObject['token']);
+            $user->setPhone($mongoUserObject['phone']);
+            $user->setPhoto($mongoUserObject['photo']);
+            $user->setWhatsUp($mongoUserObject['whats_up']);
+            $user->setActive($mongoUserObject['active']);
+        }
 
         return $user;
     }
