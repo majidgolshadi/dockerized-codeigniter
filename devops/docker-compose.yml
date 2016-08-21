@@ -36,3 +36,12 @@ php:
     links:
         - mysql
     mem_limit: 2000000000
+
+rabbitmq:
+  container_name: rabbitmq-managment
+  image: rabbitmq:3-management
+  environment:
+    RABBITMQ_DEFAULT_USER: guest
+    RABBITMQ_DEFAULT_PASS: guest
+  ports:
+    - "15672:15672"

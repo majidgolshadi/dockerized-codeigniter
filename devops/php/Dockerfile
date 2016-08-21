@@ -26,7 +26,8 @@ RUN apt-get install -y \
     && docker-php-ext-install opcache \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install gd \
-    && docker-php-ext-install zip
+    && docker-php-ext-install zip \
+    && docker-php-ext-install bcmath
 
 RUN \
     wget https://phar.phpunit.de/phpunit.phar && \
